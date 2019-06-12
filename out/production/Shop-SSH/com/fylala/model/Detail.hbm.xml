@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.fylala.model.Detail" table="detail" schema="ssh">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="num">
+            <column name="num" sql-type="int(11)"/>
+        </property>
+
+        <many-to-one name="orders" cascade="all" lazy="false" class="com.fylala.model.Orders" column="oid"/>
+
+        <many-to-one name="goods" lazy="false" class="com.fylala.model.Goods" column="gid"/>
+
+    </class>
+</hibernate-mapping>

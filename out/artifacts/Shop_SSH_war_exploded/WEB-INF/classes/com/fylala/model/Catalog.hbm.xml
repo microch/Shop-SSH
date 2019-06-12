@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.fylala.model.Catalog" table="catalog" schema="ssh">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(255)"/>
+        </property>
+
+        <property name="status">
+            <column name="status" sql-type="tinyint(1)"/>
+        </property>
+
+        <set name="goodsSet" inverse="true" lazy="false">
+            <key column="catalogId"></key>
+            <one-to-many class="com.fylala.model.Goods"></one-to-many>
+        </set>
+
+    </class>
+</hibernate-mapping>

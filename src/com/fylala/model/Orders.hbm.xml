@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.fylala.model.Orders" table="orders" schema="ssh">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="increment"></generator>
+        </id>
+        <property name="address">
+            <column name="address" sql-type="varchar(255)"/>
+        </property>
+        <property name="ident">
+            <column name="ident" sql-type="varchar(255)"/>
+        </property>
+
+        <property name="status">
+            <column name="status" sql-type="tinyint(1)"/>
+        </property>
+        <property name="createDate" type="java.util.Date">
+            <column name="createDate" sql-type="datetime" not-null="true"/>
+        </property>
+
+        <set name="detailSet" inverse="false" cascade="all" lazy="false">
+            <key column="oid"></key>
+            <one-to-many class="com.fylala.model.Detail"></one-to-many>
+        </set>
+
+        <many-to-one lazy="false" name="user" class="com.fylala.model.User" column="uid">
+        </many-to-one>
+
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/ssh?characterEncoding=UTF-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">false</prop>
+                <prop key="hbm2ddl.auto">update</prop>
+                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/ssh</prop>
+                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath:com/fylala/model/User.hbm.xml</value>
+                <value>classpath:com/fylala/model/Catalog.hbm.xml</value>
+                <value>classpath:com/fylala/model/Goods.hbm.xml</value>
+                <value>classpath:com/fylala/model/Detail.hbm.xml</value>
+                <value>classpath:com/fylala/model/Orders.hbm.xml</value>
+            </list>
+        </property>
+        <property name="annotatedClasses">
+            <list>
+                <value>com.fylala.model.User</value>
+                <value>com.fylala.model.Catalog</value>
+                <value>com.fylala.model.Goods</value>
+                <value>com.fylala.model.Detail</value>
+                <value>com.fylala.model.Orders</value>
+            </list>
+        </property>
+    </bean>
+    <bean id="baseDao" class="com.fylala.dao.BaseDao" >
+        <property name="sessionFactory" ref="sessionFactory"></property>
+    </bean>
+
+    <bean id="userDao" class="com.fylala.dao.impl.UserDaoImpl" parent="baseDao" >
+    </bean>
+
+    <bean id="catalogDao" class="com.fylala.dao.impl.CatalogDaoImpl" parent="baseDao" >
+    </bean>
+
+    <bean id="goodsDao" class="com.fylala.dao.impl.GoodsDaoImpl" parent="baseDao" >
+    </bean>
+
+    <bean id="orderDao" class="com.fylala.dao.impl.OrderDaoImpl" parent="baseDao" >
+    </bean>
+
+    <bean id="userService" class="com.fylala.service.impl.UserServiceImpl">
+        <property name="userDao" ref="userDao"></property>
+    </bean>
+
+    <bean id="catalogService" class="com.fylala.service.impl.CatalogServiceImpl">
+        <property name="catalogDao" ref="catalogDao"></property>
+    </bean>
+
+    <bean id="goodsService" class="com.fylala.service.impl.GoodsServiceImpl">
+        <property name="goodsDao" ref="goodsDao"></property>
+    </bean>
+
+    <bean id="orderService" class="com.fylala.service.impl.OrderServiceImpl">
+        <property name="orderDao" ref="orderDao"></property>
+    </bean>
+
+
+
+    <bean id="userAction" class="com.fylala.action.UserAction" scope="prototype">
+        <property name="userService" ref="userService"></property>
+        <property name="goodsService" ref="goodsService"></property>
+        <property name="orderService" ref="orderService"></property>
+    </bean>
+
+    <bean id="adminUserAction" class="com.fylala.action.admin.AdminUserAction" scope="prototype">
+        <property name="userService" ref="userService"></property>
+    </bean>
+
+    <bean id="adminCatalogAction" class="com.fylala.action.admin.AdminCatalogAction" scope="prototype">
+        <property name="catalogService" ref="catalogService"></property>
+    </bean>
+    <bean id="adminGoodsAction" class="com.fylala.action.admin.AdminGoodsAction" scope="prototype">
+        <property name="goodsService" ref="goodsService"></property>
+        <property name="catalogService" ref="catalogService"></property>
+    </bean>
+
+
+    <bean id="adminOrderAction" class="com.fylala.action.admin.AdminOrderAction" scope="prototype">
+        <property name="orderService" ref="orderService"></property>
+    </bean>
+
+    <bean id="goodsAction" class="com.fylala.action.GoodsAction" scope="prototype">
+        <property name="goodsService" ref="goodsService"></property>
+        <property name="catalogService" ref="catalogService"></property>
+    </bean>
+
+</beans>

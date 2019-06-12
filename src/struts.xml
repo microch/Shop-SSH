@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+
+    <package name="index" extends="struts-default" namespace="/">
+
+        <default-action-ref name="index"></default-action-ref>
+
+        <action name="index" class="goodsAction" method="list">
+            <result name="success">/WEB-INF/index.jsp</result>
+        </action>
+
+        <action name="logout" class="userAction" method="logout">
+            <result name="success" type="redirectAction">index</result>
+        </action>
+
+
+    </package>
+
+    <package name="userPage" extends="json-default" namespace="/user">
+        
+        <interceptors>
+            <interceptor name="checklogin" class="com.fylala.interceptor.UserLoginInterceptor"></interceptor>
+            <interceptor-stack name="mydefault">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="checklogin">
+                    <param name="excludeMethods">login,resign</param>
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+        
+        <default-interceptor-ref name="mydefault"></default-interceptor-ref>
+        <global-results>
+            <result name="login" type="redirectAction">
+                <param name="namespace">/</param>
+                <param name="actionName">index</param>
+            </result>
+        </global-results>
+
+        <action name="index" class="userAction" method="index">
+            <result name="success">/WEB-INF/user/index.jsp</result>
+        </action>
+
+        <action name="orders" class="userAction" method="orders">
+            <result name="success">/WEB-INF/user/orders.jsp</result>
+        </action>
+
+        <action name="profile" class="userAction" method="profile">
+            <result name="success">/WEB-INF/user/profile.jsp</result>
+        </action>
+
+        <action name="update" class="userAction" method="update">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="resign" class="userAction" method="resign">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="login" class="userAction" method="login">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="shopCart" class="userAction" method="shopCart">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+        <action name="delCart" class="userAction" method="delCart">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="submitCart" class="userAction" method="submitCart">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="ordersList" class="userAction" method="ordersList">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="ordersDel" class="userAction" method="ordersDel">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+    </package>
+
+    <package name="admin" extends="struts-default" namespace="/admin">
+
+        <interceptors>
+            <interceptor name="checkAdmin" class="com.fylala.interceptor.AdminLoginInterceptor"></interceptor>
+            <interceptor-stack name="mydefault">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="checkAdmin">
+
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="mydefault"></default-interceptor-ref>
+        <global-results>
+            <result name="login" type="redirectAction">
+                <param name="namespace">/</param>
+                <param name="actionName">index</param>
+            </result>
+        </global-results>
+
+        <action name="catalog" class="com.fylala.action.admin.AdminAction" method="catalog">
+            <result name="success">/WEB-INF/admin/catalog.jsp</result>
+        </action>
+
+        <action name="goods" class="com.fylala.action.admin.AdminAction" method="goods">
+            <result name="success">/WEB-INF/admin/goods.jsp</result>
+        </action>
+
+        <action name="orders" class="com.fylala.action.admin.AdminAction" method="orders">
+            <result name="success">/WEB-INF/admin/orders.jsp</result>
+        </action>
+
+    </package>
+
+    <package name="admin_user" extends="json-default" namespace="/admin/users">
+
+        <interceptors>
+            <interceptor name="checkAdmin" class="com.fylala.interceptor.AdminLoginInterceptor"></interceptor>
+            <interceptor-stack name="mydefault">
+                <interceptor-ref name="defaultStack"></interceptor-ref>
+                <interceptor-ref name="checkAdmin">
+                </interceptor-ref>
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="mydefault"></default-interceptor-ref>
+        <global-results>
+            <result name="login" type="redirectAction">
+                <param name="namespace">/</param>
+                <param name="actionName">index</param>
+            </result>
+        </global-results>
+
+
+        <action name="list" class="adminUserAction" method="list">
+            <result name="success">/WEB-INF/admin/users.jsp</result>
+        </action>
+
+        <action name="insert" class="adminUserAction" method="insert">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="find" class="adminUserAction" method="find">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="update" class="adminUserAction" method="updateUser">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="delete" class="adminUserAction" method="del">
+            <!--suppress MybatisMapperXmlInspection -->
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+    </package>
+
+    <package name="admin_catalog" extends="json-default" namespace="/admin/catalog">
+
+        <action name="list" class="adminCatalogAction" method="list">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="insert" class="adminCatalogAction" method="insert">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="find" class="adminCatalogAction" method="find">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="update" class="adminCatalogAction" method="update">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="delete" class="adminCatalogAction" method="del">
+            <!--suppress MybatisMapperXmlInspection -->
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+    </package>
+
+    <package name="admin_goods" extends="json-default" namespace="/admin/goods">
+
+        <action name="list" class="adminGoodsAction" method="list">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="insert" class="adminGoodsAction" method="insert">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="find" class="adminGoodsAction" method="find">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="update" class="adminGoodsAction" method="update">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="delete" class="adminGoodsAction" method="del">
+            <!--suppress MybatisMapperXmlInspection -->
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+    </package>
+
+    <package name="admin_order" extends="json-default" namespace="/admin/orders">
+
+        <action name="list" class="adminOrderAction" method="list">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="insert" class="adminOrderAction" method="insert">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="find" class="adminOrderAction" method="find">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="update" class="adminOrderAction" method="update">
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+        <action name="delete" class="adminOrderAction" method="del">
+            <!--suppress MybatisMapperXmlInspection -->
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+        <action name="send" class="adminOrderAction" method="send">
+            <!--suppress MybatisMapperXmlInspection -->
+            <result name="success" type="json">
+                <param name="root">resMap</param>
+            </result>
+        </action>
+
+    </package>
+
+</struts>
