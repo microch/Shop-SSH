@@ -210,7 +210,6 @@
                         <div class="card-columns">
 
                             <s:iterator value="#goods" var="g">
-
                                 <div class="card">
                                     <img class="card-img-top" src="${g.image}" alt="Card image cap">
                                     <div class="card-body">
@@ -237,7 +236,6 @@
                                         </small>
                                     </div>
                                 </div>
-
                             </s:iterator>
 
                         </div>

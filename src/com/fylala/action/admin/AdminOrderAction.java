@@ -11,14 +11,9 @@ import java.util.Map;
 public class AdminOrderAction extends ActionSupport {
 
     private Map<String, Object> resMap;
-
     private IOrderService orderService;
-
     private Orders orders;
-
     private Integer ordersId;
-
-
     public String list() throws Exception {
         resMap = new HashMap<>();
 
@@ -34,7 +29,6 @@ public class AdminOrderAction extends ActionSupport {
         }
         return "success";
     }
-
     public String insert() throws Exception {
         resMap = new HashMap<>();
         if (orderService.insert(orders)) {
@@ -46,11 +40,9 @@ public class AdminOrderAction extends ActionSupport {
         }
         return "success";
     }
-
     public String find() throws Exception {
         return "success";
     }
-
     public String update() throws Exception {
         resMap = new HashMap<>();
         if (orderService.update(orders)) {
@@ -62,7 +54,6 @@ public class AdminOrderAction extends ActionSupport {
         }
         return "success";
     }
-
     public String del() throws Exception {
         resMap = new HashMap<>();
         if (orderService.delete(ordersId)) {
@@ -74,8 +65,6 @@ public class AdminOrderAction extends ActionSupport {
         }
         return "success";
     }
-
-
     public String send() throws Exception {
         resMap = new HashMap<>();
         if (orderService.send(ordersId)) {

@@ -13,40 +13,27 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminUserAction extends ActionSupport {
-
     private Map<String, Object> resMap;
     private User user;
-
     private Integer userId;
     private Integer page = 1;
-
     private IUserService userService;
-
     public String login() throws Exception {
-
         User login = userService.login(user);
-
         return login != null ? SUCCESS : ERROR;
     }
-
     public String list() throws Exception {
-
         if (page == null) {
             page =1;
         }
-
         List<User> users = userService.listUserByPage(page);
         int userCount = userService.userCount();
-
         ActionContext.getContext().put("users", users);
         ActionContext.getContext().put("currentPage", page);
         ActionContext.getContext().put("totalPage", (int) Math.ceil(userCount / (float) 10));
-
         return "success";
     }
-
     public String insert() throws Exception {
-
         resMap = new HashMap<>();
         User resign = userService.resign(user);
         if (resign != null) {
@@ -58,10 +45,7 @@ public class AdminUserAction extends ActionSupport {
         }
         return SUCCESS;
     }
-
-
     public String find() throws Exception {
-
         resMap = new HashMap<>();
         if (userId != null) {
             User userById = userService.findUserById(userId);
@@ -104,7 +88,6 @@ public class AdminUserAction extends ActionSupport {
         }
         return "success";
     }
-
 
     public void setUserId(Integer userId) {
         this.userId = userId;

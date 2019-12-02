@@ -32,7 +32,6 @@ public class UserAction extends ActionSupport {
 
     public String index() throws Exception {
 
-
         return "success";
     }
 
@@ -40,9 +39,7 @@ public class UserAction extends ActionSupport {
     public String login() throws Exception {
         resMap = new HashMap<>();
         String kaptcha = (String) ActionContext.getContext().getSession().get(KAPTCHA_SESSION_KEY);
-
         if (kaptcha.equals(code) || "1111".equals(code)) {
-
             User login = userService.login(user);
             if (login != null) {
                 ActionContext.getContext().getSession().put("user", login);
@@ -52,24 +49,17 @@ public class UserAction extends ActionSupport {
                 resMap.put("success", false);
                 resMap.put("msg", "登录失败");
             }
-
         } else {
             resMap.put("success", false);
             resMap.put("msg", "验证码错误");
         }
-
         return "success";
     }
-
-
     public String submitCart() throws Exception {
         resMap = new HashMap<>();
         User user = (User) ActionContext.getContext().getSession().get("user");
-
-
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-//        Set<Detail> details = new HashSet<>();
         Random random = new Random();
         orders.setUser(user);
 
@@ -80,10 +70,8 @@ public class UserAction extends ActionSupport {
                 detail.setGoods(cart.getGoods());
                 detail.setNum(cart.getNum());
                 detail.setOrders(orders);
-//            details.add(detail);
                 orders.getDetailSet().add(detail);
             }
-//        orders.setDetailSet(details);
             orders.setCreateDate(date);
             orders.setIdent(sdf.format(date) + random.nextInt());
             if (orderService.insert(orders)) {
@@ -103,7 +91,6 @@ public class UserAction extends ActionSupport {
 
 
     public String shopCart() throws Exception {
-
         resMap = new HashMap<>();
         User user = (User) ActionContext.getContext().getSession().get("user");
         if (user != null) {
@@ -135,7 +122,6 @@ public class UserAction extends ActionSupport {
             resMap.put("success", false);
             resMap.put("msg", "未登录");
         }
-
         return "success";
     }
 
@@ -176,9 +162,7 @@ public class UserAction extends ActionSupport {
     }
 
     public String ordersList() throws Exception {
-
         resMap = new HashMap<>();
-
         User user = (User) ActionContext.getContext().getSession().get("user");
         if (user != null) {
             List<Orders> orders = orderService.findByUser(user);
@@ -188,7 +172,6 @@ public class UserAction extends ActionSupport {
             resMap.put("success", false);
             resMap.put("msg", "未登录");
         }
-
         return "success";
     }
 
@@ -201,7 +184,6 @@ public class UserAction extends ActionSupport {
     public String ordersDel() throws Exception {
         resMap = new HashMap<>();
         User user = (User) ActionContext.getContext().getSession().get("user");
-
         if (user != null && orderService.delete(oid)) {
             resMap.put("success", true);
             resMap.put("msg", "删除成功");
@@ -214,9 +196,7 @@ public class UserAction extends ActionSupport {
 
 
     public String update() throws Exception {
-
         resMap = new HashMap<>();
-
         User login = (User) ActionContext.getContext().getSession().get("user");
         if (login != null) {
             user.setId(login.getId());
@@ -228,13 +208,10 @@ public class UserAction extends ActionSupport {
                 resMap.put("success", false);
                 resMap.put("msg", "更新失败");
             }
-
-
         } else {
             resMap.put("success", false);
             resMap.put("msg", "未登录");
         }
-
         return "success";
     }
 
@@ -242,9 +219,7 @@ public class UserAction extends ActionSupport {
     public String resign() throws Exception {
         resMap = new HashMap<>();
         String kaptcha = (String) ActionContext.getContext().getSession().get(KAPTCHA_SESSION_KEY);
-
         if (kaptcha.equals(code)) {
-
             User resign = userService.resign(user);
             if (resign != null) {
                 resMap.put("success", true);
@@ -257,7 +232,6 @@ public class UserAction extends ActionSupport {
             resMap.put("success", false);
             resMap.put("msg", "验证码错误");
         }
-
         return "success";
     }
 

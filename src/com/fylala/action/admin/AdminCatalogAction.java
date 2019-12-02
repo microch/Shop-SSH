@@ -14,20 +14,12 @@ import java.util.Map;
 public class AdminCatalogAction extends ActionSupport {
 
     private Map<String, Object> resMap;
-
     private ICatalogService catalogService;
-
     private Catalog catalog;
-
     private Integer catalogId;
-
-
     public String list() throws Exception {
-
         resMap = new HashMap<>();
-
         List<Catalog> catalogs = catalogService.findAll();
-
         if (catalogs != null) {
             resMap.put("success", true);
             resMap.put("data", catalogs);
@@ -39,7 +31,6 @@ public class AdminCatalogAction extends ActionSupport {
         }
         return "success";
     }
-
     public String insert() throws Exception {
         resMap = new HashMap<>();
         if (catalogService.insert(catalog)) {
@@ -51,7 +42,6 @@ public class AdminCatalogAction extends ActionSupport {
         }
         return "success";
     }
-
     public String find() throws Exception {
         resMap = new HashMap<>();
         Catalog byId = catalogService.findById(catalogId);
@@ -64,7 +54,6 @@ public class AdminCatalogAction extends ActionSupport {
         }
         return "success";
     }
-
     public String update() throws Exception {
         resMap = new HashMap<>();
         if (catalogService.update(catalog)) {
@@ -76,7 +65,6 @@ public class AdminCatalogAction extends ActionSupport {
         }
         return "success";
     }
-
     public String del() throws Exception {
         resMap = new HashMap<>();
         if (catalogService.delete(catalogId)) {

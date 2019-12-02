@@ -25,7 +25,6 @@ public class GoodsAction extends ActionSupport {
 
 
     public String list() throws Exception {
-
         List<Catalog> catalogList = catalogService.findIsUse();
         Set<Goods> goodsList = null;
         Catalog catalog = null;
@@ -37,7 +36,6 @@ public class GoodsAction extends ActionSupport {
             }
         }
         if (goodsList == null) {
-//            List<Goods> all = goodsService.findAll(searchValue, minPrice, maxPrice);
             List<Goods> all = goodsService.findAllIsUse(searchValue, minPrice, maxPrice);
             goodsList = new HashSet<>();
             for (Goods goods : all) {

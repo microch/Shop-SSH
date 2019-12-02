@@ -11,21 +11,13 @@ import java.util.List;
 import java.util.Map;
 
 public class AdminGoodsAction extends ActionSupport {
-
     private Map<String, Object> resMap;
-
     private IGoodsService goodsService;
-
     private ICatalogService catalogService;
-
     private Goods goods;
-
     private Integer goodsId;
-
-
     public String list() throws Exception {
         resMap = new HashMap<>();
-
         List<Goods> goods = goodsService.findAll();
         if (goods != null) {
             resMap.put("success", true);
@@ -38,7 +30,6 @@ public class AdminGoodsAction extends ActionSupport {
         }
         return "success";
     }
-
     public String insert() throws Exception {
         resMap = new HashMap<>();
         if (goodsService.insert(goods)) {
@@ -50,11 +41,9 @@ public class AdminGoodsAction extends ActionSupport {
         }
         return "success";
     }
-
     public String find() throws Exception {
         return "success";
     }
-
     public String update() throws Exception {
         resMap = new HashMap<>();
         if (goodsService.update(goods)) {
@@ -66,7 +55,6 @@ public class AdminGoodsAction extends ActionSupport {
         }
         return "success";
     }
-
     public String del() throws Exception {
         resMap = new HashMap<>();
         if (goodsService.delete(goodsId)) {
@@ -78,7 +66,6 @@ public class AdminGoodsAction extends ActionSupport {
         }
         return "success";
     }
-
     public Map<String, Object> getResMap() {
         return resMap;
     }
